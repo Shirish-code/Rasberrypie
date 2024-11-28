@@ -10808,3 +10808,4 @@ Already up to date.
 [INFO 2024-11-28_19:51:30] MQTT producing DAG in tml_read_MQTT_step_3_kafka_producetotopic_dag-testproject-82a3.py
 [INFO 2024-11-28_19:51:48] Preprocessing DAG in tml_system_step_4_kafka_preprocess_dag-testproject-82a3.py
 [INFO 2024-11-28_19:51:58] Visualization DAG in tml_system_step_7_kafka_visualization_dag-testproject-82a3.py
+[INFO 2024-11-28_19:52:29] PrivateGPT Step 9 DAG in tml_system_step_9_privategpt_qdrant_dag-testproject-82a3.py
