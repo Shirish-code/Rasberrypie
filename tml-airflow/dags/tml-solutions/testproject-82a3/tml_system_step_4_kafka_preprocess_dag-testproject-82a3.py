@@ -40,18 +40,12 @@ default_args = {
   'preprocesstypes' : 'min,max,trend,anomprob,variance,avg', # <<< **** MAIN PREPROCESS TYPES CHNAGE AS NEEDED refer to https://tml-readthedocs.readthedocs.io/en/latest/
   'pathtotmlattrs' : 'oem=n/a,lat=n/a,long=n/a,location=n/a,identifier=n/a', # Change as needed     
   'jsoncriteria' : 'uid=hostName,filter:allrecords~\
-
-subtopics=hostName,hostName,hostName~\
-
-values=inboundpackets,outboundpackets,pingStatus~\
-
-identifiers=inboundpackets,outboundpackets,pingStatus~\
-
-datetime=lastUpdated~\
-
-msgid=~\
-
-latlong='
+    subtopics=hostName,hostName,hostName~\
+    values=inboundpackets,outboundpackets,pingStatus~\
+    identifiers=inboundpackets,outboundpackets,pingStatus~\
+    datetime=lastUpdated~\
+    msgid=~\
+    latlong='
 }
 
 ######################################## DO NOT MODIFY BELOW #############################################
