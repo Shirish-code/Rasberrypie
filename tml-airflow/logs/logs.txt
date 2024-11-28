@@ -10802,3 +10802,4 @@ Already up to date.
 [INFO 2024-11-28_18:23:48] TML Solution Studio: git push Status for project testproject-82a3: Everything up-to-date
 [INFO 2024-11-28_19:49:54] Deleting topic cisco-network-mainstream in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
 [INFO 2024-11-28_19:50:05] Deleting topic cisco-network-preprocess in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
+[INFO 2024-11-28_19:50:17] Deleting topic ml-data in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
