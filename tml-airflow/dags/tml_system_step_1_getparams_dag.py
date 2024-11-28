@@ -55,6 +55,10 @@ default_args = {
  'MYSQLMAXLIFETIMEMINUTES' : '4',
  'MYSQLMAXCONN' : '4',
  'MYSQLMAXIDLE' : '10',
+ 'MYSQLHOSTNAME' : '127.0.0.1:3306',   
+ 'KUBEMYSQLHOSTNAME' : 'mysql-service:3306', # this is the mysql service in kubernetes   
+ 'MYSQLDB' : 'tmlids',
+ 'MYSQLUSER' : 'root',    
  'SASLMECHANISM' : 'PLAIN',
  'MINFORECASTACCURACY' : '55',
  'COMPRESSIONTYPE' : 'gzip',
@@ -116,7 +120,8 @@ def reinitbinaries(sname):
        
     # copy folders
     shutil.copytree("/tss_readthedocs", "/{}".format(sname),dirs_exist_ok=True)
-    
+    #remove local logs
+    os.remove('/dagslocalbackup/logs.txt')    
         
 def updateviperenv():
     # update ALL
@@ -236,14 +241,26 @@ def updateviperenv():
          data[r] = "KUBERNETES={}\n".format(default_args['KUBERNETES'])                
        if 'COMPANYNAME' in d: 
          data[r] = "COMPANYNAME={}\n".format(default_args['COMPANYNAME'])                
+       if 'MYSQLHOSTNAME' in d: 
+         if "KUBE" in os.environ:
+           if os.environ["KUBE"] == "1":
+            data[r] = "MYSQLHOSTNAME={}\n".format(default_args['KUBEMYSQLHOSTNAME'])            
+           else: 
+            data[r] = "MYSQLHOSTNAME={}\n".format(default_args['MYSQLHOSTNAME'])            
+         else: 
+           data[r] = "MYSQLHOSTNAME={}\n".format(default_args['MYSQLHOSTNAME'])                
+       if 'MYSQLDB' in d: 
+         data[r] = "MYSQLDB={}\n".format(default_args['MYSQLDB'])                
+       if 'MYSQLUSER' in d: 
+         data[r] = "MYSQLUSER={}\n".format(default_args['MYSQLUSER'])                
 
        r += 1
      with open(mainfile, 'w', encoding='utf-8') as file: 
       file.writelines(data)
-
+    
     subprocess.call("/tmux/starttml.sh", shell=True)
-    time.sleep(3)
-
+    time.sleep(3)        
+    
 def getparams(**context):
   args = default_args    
   VIPERHOST = ""
@@ -255,6 +272,8 @@ def getparams(**context):
   HPDEHOSTPREDICT = ""
   HPDEPORTPREDICT = ""
 
+  tsslogging.locallogs("INFO", "STEP 1: Build started") 
+    
   sname = args['solutionname']    
   desc = args['description']        
   stitle = args['solutiontitle']    
@@ -353,7 +372,7 @@ def getparams(**context):
     task_instance.xcom_push(key="{}_SOLUTIONEXTERNALPORT".format(sname),value="_{}".format(os.environ['SOLUTIONEXTERNALPORT'])) 
     task_instance.xcom_push(key="{}_SOLUTIONVIPERVIZPORT".format(sname),value="_{}".format(os.environ['SOLUTIONVIPERVIZPORT']))  
     task_instance.xcom_push(key="{}_SOLUTIONAIRFLOWPORT".format(sname),value="_{}".format(os.environ['SOLUTIONAIRFLOWPORT'])) 
-    
+   # killports()
 
   if 'MQTTUSERNAME' in os.environ:
     task_instance.xcom_push(key="{}_MQTTUSERNAME".format(sname),value=os.environ['MQTTUSERNAME'])
@@ -411,3 +430,5 @@ def getparams(**context):
   task_instance.xcom_push(key="{}_brokerhost".format(sname),value=brokerhost)
   task_instance.xcom_push(key="{}_brokerport".format(sname),value="_{}".format(brokerport))
   task_instance.xcom_push(key="{}_chip".format(sname),value=chip)
+    
+  tsslogging.locallogs("INFO", "STEP 1: completed - TML system parameters successfully gathered")

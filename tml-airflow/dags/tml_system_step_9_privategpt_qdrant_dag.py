@@ -86,18 +86,31 @@ def startpgptcontainer():
       stopcontainers()
 #      buf="docker stop $(docker ps -q --filter ancestor={} )".format(pgptcontainername)
  #     subprocess.call(buf, shell=True)
-      time.sleep(4)
-      buf = "docker run -d -p {}:{} --net=host --gpus all --env PORT={} --env GPU=1 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)
-      subprocess.call(buf, shell=True)
-
+      time.sleep(10)
+      if '-no-gpu-' in pgptcontainername:       
+          buf = "docker run -d -p {}:{} --net=host --env PORT={} --env GPU=0 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)       
+      else: 
+        if os.environ['TSS'] == "1":       
+          buf = "docker run -d -p {}:{} --net=host --gpus all -v /var/run/docker.sock:/var/run/docker.sock:z --env PORT={} --env TSS=1 --env GPU=1 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)
+        else:
+          buf = "docker run -d -p {}:{} --net=bridge --gpus all -v /var/run/docker.sock:/var/run/docker.sock:z --env PORT={} --env TSS=0 --env GPU=1 --env COLLECTION={} --env WEB_CONCURRENCY={} --env CUDA_VISIBLE_DEVICES={} {}".format(pgptport,pgptport,pgptport,collection,concurrency,cuda,pgptcontainername)
+         
+      v=subprocess.call(buf, shell=True)
+      return v,buf
+ 
 def qdrantcontainer():
-
-    if int(default_args['concurrency']) > 1:
-      buf="docker stop $(docker ps -q --filter ancestor=qdrant/qdrant )"
-      subprocess.call(buf, shell=True)
-      time.sleep(4)
+    v=0
+    buf=""
+    buf="docker stop $(docker ps -q --filter ancestor=qdrant/qdrant )"
+    subprocess.call(buf, shell=True)
+    time.sleep(4)
+    if os.environ['TSS'] == "1":
       buf = "docker run -d -p 6333:6333 -v $(pwd)/qdrant_storage:/qdrant/storage:z qdrant/qdrant"
-      subprocess.call(buf, shell=True)
+    else: 
+       buf = "docker run -d --network=bridge -v /var/run/docker.sock:/var/run/docker.sock:z -p 6333:6333 -v $(pwd)/qdrant_storage:/qdrant/storage:z qdrant/qdrant"
+
+    v=subprocess.call(buf, shell=True)
+    return v,buf
 
 def pgptchat(prompt,context,docfilter,port,includesources,ip,endpoint):
 
@@ -249,7 +262,11 @@ def sendtoprivategpt(maindata):
    pgptendpoint="/v1/completions"
    
    maintopic = default_args['pgpt_data_topic']
-   mainip = default_args['pgpthost']
+   if os.environ['TSS']=="1":
+     mainip = default_args['pgpthost']
+   else: 
+     mainip = "http://" + os.environ['qip']
+
    mainport = default_args['pgptport']
 
    for mess in maindata:
@@ -329,6 +346,8 @@ def startprivategpt(**context):
 
        wn = windowname('ai',sname,sd)
        subprocess.run(["tmux", "new", "-d", "-s", "{}".format(wn)])
+#       if os.environ['TSS']=="0":
+ #          subprocess.run(["tmux", "send-keys", "-t", "{}".format(wn), "export qip={}".format(os.environ['qip']), "ENTER"])
        subprocess.run(["tmux", "send-keys", "-t", "{}".format(wn), "cd /Viper-preprocess-pgpt", "ENTER"])
        subprocess.run(["tmux", "send-keys", "-t", "{}".format(wn), "python {} 1 {} {}{} {}".format(fullpath,VIPERTOKEN, HTTPADDR, VIPERHOST, VIPERPORT[1:]), "ENTER"])
 
@@ -348,9 +367,47 @@ if __name__ == '__main__':
         VIPERHOST = sys.argv[3]
         VIPERPORT = sys.argv[4]
 
-        startpgptcontainer()
-        qdrantcontainer()
-        time.sleep(10)  # wait for containers to start
+        if "KUBE" not in os.environ:          
+          v,buf=qdrantcontainer()
+          if buf != "":
+           if v==1:
+            tsslogging.locallogs("WARN", "STEP 9: There seems to be an issue starting the Qdrant container.  Here is the run command - try to run it nanually for testing: {}".format(buf))
+           else:
+            tsslogging.locallogs("INFO", "STEP 9: Success starting Qdrant.  Here is the run command: {}".format(buf))
+        
+          time.sleep(5)  # wait for containers to start
+         
+          tsslogging.locallogs("INFO", "STEP 9: Starting privateGPT")
+          v,buf=startpgptcontainer()
+          if v==1:
+            tsslogging.locallogs("WARN", "STEP 9: There seems to be an issue starting the privateGPT container.  Here is the run command - try to run it nanually for testing: {}".format(buf))
+          else:
+            tsslogging.locallogs("INFO", "STEP 9: Success starting privateGPT.  Here is the run command: {}".format(buf))
+
+          time.sleep(10)  # wait for containers to start
+          tsslogging.getqip()          
+        elif  os.environ["KUBE"] == "0":
+          v,buf=qdrantcontainer()
+          if buf != "":
+           if v==1:
+            tsslogging.locallogs("WARN", "STEP 9: There seems to be an issue starting the Qdrant container.  Here is the run command - try to run it nanually for testing: {}".format(buf))
+           else:
+            tsslogging.locallogs("INFO", "STEP 9: Success starting Qdrant.  Here is the run command: {}".format(buf))
+        
+          time.sleep(5)  # wait for containers to start         
+         
+          tsslogging.locallogs("INFO", "STEP 9: Starting privateGPT")
+          v,buf=startpgptcontainer()
+          if v==1:
+            tsslogging.locallogs("WARN", "STEP 9: There seems to be an issue starting the privateGPT container.  Here is the run command - try to run it nanually for testing: {}".format(buf))
+          else:
+            tsslogging.locallogs("INFO", "STEP 9: Success starting privateGPT.  Here is the run command: {}".format(buf))
+
+          time.sleep(10)  # wait for containers to start         
+          tsslogging.getqip() 
+        else:  
+          tsslogging.locallogs("INFO", "STEP 9: [KUBERNETES] Starting privateGPT - LOOKS LIKE THIS IS RUNNING IN KUBERNETES")
+          tsslogging.locallogs("INFO", "STEP 9: [KUBERNETES] Make sure you have applied the private GPT YAML files and have the privateGPT Pod running")
 
         while True:
          try:
@@ -365,6 +422,7 @@ if __name__ == '__main__':
               sendtoprivategpt(maindata)                      
              time.sleep(2)
          except Exception as e:
+          tsslogging.locallogs("ERROR", "STEP 9: PrivateGPT Step 9 DAG in {} {}".format(os.path.basename(__file__),e))
           tsslogging.tsslogit("PrivateGPT Step 9 DAG in {} {}".format(os.path.basename(__file__),e), "ERROR" )
           tsslogging.git_push("/{}".format(repo),"Entry from {}".format(os.path.basename(__file__)),"origin")
           break
