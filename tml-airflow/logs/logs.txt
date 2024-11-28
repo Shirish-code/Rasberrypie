@@ -10780,3 +10780,13 @@ branch.main.remote=origin
 branch.main.merge=refs/heads/main
 [INFO 2024-11-28_18:08:44] TML Solution Studio: Github Remote Status: origin	https://github.com/Shirish-code/Rasberrypie.git (fetch)
 origin	https://<personal access token hidden>@github.com/Shirish-code/Rasberrypie.git (push)
+[INFO 2024-11-28_18:09:26] TML Solution Studio: TML Project Creation: Creating new TML project: /Rasberrypie/tml-airflow/dags/tml-solutions/myfirsttssproject2-82a3
+[INFO 2024-11-28_18:09:26] TML Solution Studio: git pull --rebase --autostash origin main Status: From https://github.com/Shirish-code/Rasberrypie
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+[INFO 2024-11-28_18:10:10] TML Solution Studio: Starting Git commit process for project: myfirsttssproject2-82a3
+[INFO 2024-11-28_18:10:10] TML Solution Studio: git commit -a Status for project myfirsttssproject2-82a3: fatal: paths 'project ...' with -a does not make sense
+[INFO 2024-11-28_18:10:11] TML Solution Studio: git push origin main Status: Everything up-to-date
+[INFO 2024-11-28_18:10:11] TML Solution Studio: git add . Status: 
+[INFO 2024-11-28_18:10:11] TML Solution Studio: git commit -a Status for project myfirsttssproject2-82a3: fatal: paths 'project ...' with -a does not make sense
+[INFO 2024-11-28_18:10:12] TML Solution Studio: git push Status for project myfirsttssproject2-82a3: Everything up-to-date
