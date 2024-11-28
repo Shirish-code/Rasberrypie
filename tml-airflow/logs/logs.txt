@@ -10830,3 +10830,4 @@ branch.main.merge=refs/heads/main
 origin	https://<personal access token hidden>@github.com/Shirish-code/Rasberrypie.git (push)
 [INFO 2024-11-28_21:12:00] Deleting topic cisco-network-mainstream in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
 [INFO 2024-11-28_21:12:12] Deleting topic cisco-network-preprocess in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
+[INFO 2024-11-28_21:12:24] Deleting topic ml-data in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
