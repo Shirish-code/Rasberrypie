@@ -10908,3 +10908,4 @@ origin	https://<personal access token hidden>@github.com/Shirish-code/Rasberrypi
 [INFO 2024-12-05_03:53:22] Deleting topic cisco-network-privategpt in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
 [INFO 2024-12-05_03:53:54] MQTT producing DAG in tml_read_MQTT_step_3_kafka_producetotopic_dag-testproject-82a3.py
 [INFO 2024-12-05_03:54:06] Preprocessing DAG in tml_system_step_4_kafka_preprocess_dag-testproject-82a3.py
+[INFO 2024-12-05_03:54:13] Visualization DAG in tml_system_step_7_kafka_visualization_dag-testproject-82a3.py
