@@ -10951,3 +10951,20 @@ origin	https://<personal access token hidden>@github.com/Shirish-code/Rasberrypi
 [INFO 2024-12-05_04:34:19] Docker DAG in tml_system_step_8_deploy_solution_to_docker_dag-testproject-82a3.py
 [INFO 2024-12-05_04:38:30] {'name': ['Project with slug "testproject-82a3" already exists.']}
 [INFO 2024-12-05_04:38:59] {'name': ['Project with slug "testproject-82a3" already exists.']}
+[INFO 2024-12-05_07:25:35] TML Solution Studio Started: DOCKERUSERNAME=sajoshi4, GITUSERNAME=Shirish-code, GITREPOURL=https://github.com/Shirish-code/Rasberrypie.git, AIRFLOWPORT=9000
+[INFO 2024-12-05_07:25:36] TML Solution Studio: Docker Login Status: WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[INFO 2024-12-05_07:25:36] TML Solution Studio: Github Config Status: core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.url=https://github.com/Shirish-code/Rasberrypie.git
+remote.origin.fetch=+refs/heads/main:refs/remotes/origin/main
+remote.origin.pushurl=https://<personal access token hidden>@github.com/Shirish-code/Rasberrypie.git
+branch.main.remote=origin
+branch.main.merge=refs/heads/main
+[INFO 2024-12-05_07:25:36] TML Solution Studio: Github Remote Status: origin	https://github.com/Shirish-code/Rasberrypie.git (fetch)
+origin	https://<personal access token hidden>@github.com/Shirish-code/Rasberrypie.git (push)
