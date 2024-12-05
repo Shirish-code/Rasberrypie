@@ -10976,3 +10976,4 @@ origin	https://<personal access token hidden>@github.com/Shirish-code/Rasberrypi
 [INFO 2024-12-05_07:46:42] MQTT producing DAG in tml_read_MQTT_step_3_kafka_producetotopic_dag-testproject-82a3.py
 [INFO 2024-12-05_07:46:53] Preprocessing DAG in tml_system_step_4_kafka_preprocess_dag-testproject-82a3.py
 [INFO 2024-12-05_07:47:02] Visualization DAG in tml_system_step_7_kafka_visualization_dag-testproject-82a3.py
+[INFO 2024-12-05_07:47:34] Docker DAG in tml_system_step_8_deploy_solution_to_docker_dag-testproject-82a3.py
