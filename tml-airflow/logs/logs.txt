@@ -10901,3 +10901,4 @@ branch.main.remote=origin
 branch.main.merge=refs/heads/main
 [INFO 2024-12-05_03:40:07] TML Solution Studio: Github Remote Status: origin	https://github.com/Shirish-code/Rasberrypie.git (fetch)
 origin	https://<personal access token hidden>@github.com/Shirish-code/Rasberrypie.git (push)
+[INFO 2024-12-05_03:52:52] Deleting topic cisco-network-mainstream in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
