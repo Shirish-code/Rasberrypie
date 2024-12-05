@@ -10949,3 +10949,4 @@ origin	https://<personal access token hidden>@github.com/Shirish-code/Rasberrypi
 [INFO 2024-12-05_04:30:24] PrivateGPT Step 9 DAG in tml_system_step_9_privategpt_qdrant_dag-testproject-82a3.py
 [INFO 2024-12-05_04:31:03] Docker DAG in tml_system_step_8_deploy_solution_to_docker_dag-testproject-82a3.py
 [INFO 2024-12-05_04:34:19] Docker DAG in tml_system_step_8_deploy_solution_to_docker_dag-testproject-82a3.py
+[INFO 2024-12-05_04:38:30] {'name': ['Project with slug "testproject-82a3" already exists.']}
