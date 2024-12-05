@@ -10972,3 +10972,4 @@ origin	https://<personal access token hidden>@github.com/Shirish-code/Rasberrypi
 [INFO 2024-12-05_07:45:49] Deleting topic cisco-network-preprocess in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
 [INFO 2024-12-05_07:45:56] Deleting topic ml-data in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
 [INFO 2024-12-05_07:46:03] Deleting topic prediction-data in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
+[INFO 2024-12-05_07:46:10] Deleting topic cisco-network-privategpt in tml_system_step_2_kafka_createtopic_dag-testproject-82a3.py
